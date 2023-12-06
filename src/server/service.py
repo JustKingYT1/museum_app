@@ -46,20 +46,19 @@ class ResolverManager:
         self.database_model = database_model
         self.pydantic_model = pydantic_model
 
-    def check_for_errors(self, id=0) -> dict:
+    def check_for_errors(self) -> dict:
         try:
-            self.get(id)
+            self.check_fun()
             return {'code': 200, 'msg': 'Successfully', 'result': False}
         except peewee.DatabaseError as ex:
             return {'code': 400, 'msg': str(ex), 'result': True}
-        except peewee.InternalError as ex:
-            return {'code': 400, 'msg': str(ex), 'result': True}
-        except peewee.IntegrityError as ex:
-            return {'code': 400, 'msg': str(ex), 'result': True}
         except peewee.InterfaceError as ex:
             return {'code': 400, 'msg': str(ex), 'result': True}
-        except peewee.OperationalError as ex:
-            return {'code': 400, 'msg': str(ex), 'result': True}
+        except peewee.DoesNotExist:
+            return {'code': 201, 'msg': 'There is no existing record to check', 'result': False}
+    
+    def check_fun(self, id: int = -1):
+         return self.database_model.get(self.database_model.id == id)
         
 
     def new(self, new_model: Type[ModifyBaseModel]) -> dict:
@@ -80,23 +79,22 @@ class ResolverManager:
         return self.get(id=new_database_model.id)
 
     def get(self, id: int) -> dict:
-        try:
-            check = self.check_for_errors()
-            if check["result"]:
-                return check
-        except RecursionError:
-            pass
-
-        try:
-            return {'code': 200, 'msg': 'Succesfully', 'result': self.database_model.get(self.database_model.id == id).__data__}
-        except peewee.DoesNotExist as ex:
-            return {'code': 400, 'msg': 'Not found', 'result': None}
+        check = self.check_for_errors()
+        if check["result"]:
+            return check
+        
+        res = self.database_model.get_or_none(self.database_model.id == id)
+        
+        return {'code': 200, 'msg': 'Succesfully', 'result': res.__data__} if res else {'code': 400, 'msg': 'Not found', 'result': None}
+ 
     
     def get_all(self) -> dict:
         check = self.check_for_errors()
         if check['result']:
             return check
+        
         models_list = []
+        
         for model in self.database_model.select():
             new_model = {}
 
@@ -114,7 +112,10 @@ class ResolverManager:
         if check['result']:
             return check
         
-        self.get(id=id)
+        res = self.get(id=id)
+        
+        if res['code'] != 200:
+            return res
         
         model = self.database_model.get(self.database_model.id == id)
 
@@ -132,10 +133,13 @@ class ResolverManager:
         check = self.check_for_errors()
         if check['result']:
             return check
-        result = self.get(id=id)
-        if result['code'] != 200:
-            return result
+        
+        res = self.get(id=id)
+
+        if res['code'] != 200:
+            return res
+
         self.database_model.get(self.database_model.id == id).delete_instance()
-        result['result'] = None
-        return result
+
+        return {'code': 200, 'msg': 'Succesfully', 'result': None}
     
