@@ -31,3 +31,14 @@ class Rooms(ModifyBaseModel):
 class Itineraries(ModifyBaseModel):
     room_id: int
     excursion_id: int
+
+class UserAuth(BaseModel):
+    userID: int
+    login: str
+    password: str
+    power_level: int
+
+class LoginData(BaseModel):
+    login: str
+    password: str
+
