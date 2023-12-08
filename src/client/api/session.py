@@ -1,6 +1,7 @@
 from src.server.database.pydantic_models import UserAuth, Users
 from src.client.api.resolvers import login, register
 from src.server.database.pydantic_models import LoginData
+from src.client.api.resolvers import check_connection
 
 
 class Session:
@@ -9,14 +10,23 @@ class Session:
         userID=-1,
         login='',
         password='',
-        access_level=-1
+        power_level=-1
     )
     error: str = None
+    server_available: bool = None
+
+    def __init__(self) -> None:
+        self.check_connect()
+
+    def check_connect(self):
+        self.server_available = type(check_connection()) is bool
 
     def login(self, log_in: str, password: str):
         answer = login(data=LoginData(
             login=log_in,
             password=password))
+        
+        print(answer)
         
         match answer['code']:
             case 400:

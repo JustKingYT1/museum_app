@@ -6,12 +6,17 @@ def server_available(func):
     def need_it(*args, **kwargs):
         try:
             requests.get(url=settings.URL)
+            print(1)
             return func(*args, **kwargs)
         except requests.exceptions.ConnectionError:
+            print(2)
             return {'code': 400, 'msg': 'Server is not available', 'result': None}
     
     return need_it
 
+@server_available
+def check_connection():
+    return True
 
 @server_available
 def login(data: LoginData) -> dict:

@@ -8,7 +8,7 @@ PORT = 7777
 URL = f'http://{HOST}:{PORT}'
 
 # Client settings
-IMAGE_DIR = '../museum_app/src/client/img'
+IMAGE_DIR = '../museum_app/resources/img'
 
 # Global settings
 DEBUG = True
