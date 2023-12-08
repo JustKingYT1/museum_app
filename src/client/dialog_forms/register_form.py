@@ -83,15 +83,18 @@ class RegisterWindow(QtWidgets.QDialog):
                 return False
             
         return True
-
+    
     def on_register_button_clicked(self) -> None:
+        self.register()
+
+    def register(self) -> None:
         if not self.data_is_valid():
             return
         
         self.parent().session.register(type_id=self.line_edit_type_id.text(), login=self.line_edit_login.text(), password=self.line_edit_password.text()),
 
         if self.parent().session.error:
-            return self.parent.show_message(
+            return self.parent().show_message(
                 text=self.parent().session.error,
                 error=True,
                 parent=self

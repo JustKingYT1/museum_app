@@ -6,10 +6,8 @@ def server_available(func):
     def need_it(*args, **kwargs):
         try:
             requests.get(url=settings.URL)
-            print(1)
             return func(*args, **kwargs)
         except requests.exceptions.ConnectionError:
-            print(2)
             return {'code': 400, 'msg': 'Server is not available', 'result': None}
     
     return need_it
@@ -24,4 +22,8 @@ def login(data: LoginData) -> dict:
 
 @server_available
 def register(data: Users) -> dict:
-    return requests.get(url=f'{settings.URL}/users/new', data=f'{{"id": 0, "type_id": {data.type_id}, "login": "{data.login}", "password": "{data.password}"}}')
+    return requests.post(url=f'{settings.URL}/users/new', data=f'{{"id": 0, "type_id": {data.type_id}, "login": "{data.login}", "password": "{data.password}"}}').json()
+
+@server_available
+def update_password(data: Users) -> dict:
+    return requests.put(url=f'{settings.URL}/users/change', data=f'{{"login": "{data.login}", "password": "{data.password}"}}').json()

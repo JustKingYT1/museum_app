@@ -1,5 +1,5 @@
 from src.server.database.pydantic_models import UserAuth, Users
-from src.client.api.resolvers import login, register
+from src.client.api.resolvers import login, register, update_password
 from src.server.database.pydantic_models import LoginData
 from src.client.api.resolvers import check_connection
 
@@ -26,8 +26,6 @@ class Session:
             login=log_in,
             password=password))
         
-        print(answer)
-        
         match answer['code']:
             case 400:
                 self.error = answer['msg']
@@ -35,7 +33,7 @@ class Session:
             case 200:
                 self.error = None
                 self.user = UserAuth(
-                    userID=answer['result']['id'],
+                    userID=answer['result']['userID'],
                     login=answer['result']['login'],
                     password=answer['result']['password'],
                     power_level=answer['result']['power_level']
@@ -49,14 +47,30 @@ class Session:
             login=login,
             password=password
         ))
-        match answer:
+        match answer['code']:
             case 400:
                 self.error = answer['msg']
             
             case 200:
                 self.error = None
 
+    def update(self, login: str, password: str) -> None:
+        answer = update_password(data=LoginData(login=login, password=password))
+        match answer['code']:
+            case 400:
+                self.error = answer['msg']
+            
+            case 200:
+                self.error = None
+                self.user = UserAuth(
+                    userID=answer['result']['userID'],
+                    login=answer['result']['login'],
+                    password=answer['result']['password'],
+                    power_level=self.user.power_level
+                )
+
     def leave(self):
+        self.user.userID = -1
         self.user.power_level = -1
         self.user.login = ''
         self.user.password = ''

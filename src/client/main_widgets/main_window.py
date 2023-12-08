@@ -8,6 +8,7 @@ from server import start_server
 from src.client.main_widgets.page_list import PageList
 from src.client.tools import include_widgets
 from src.client.main_widgets.authorization_menu import AuthorizationMenu
+from src.client.main_widgets.user_profile import UserProfile
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -39,7 +40,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.widget_container_v_layout = QtWidgets.QVBoxLayout()
         self.page_list = PageList(self)
         self.authorization_menu = AuthorizationMenu(self)
-        self.user_profile = None # TODO
+        self.user_profile = UserProfile(self)
         # TODO
 
     def __setting_ui(self) -> None: 
@@ -54,12 +55,26 @@ class MainWindow(QtWidgets.QMainWindow):
         self.main_h_layout.addWidget(self.page_list)
         self.main_h_layout.addWidget(self.widget_container)
         self.main_h_layout.addWidget(self.authorization_menu)
+        self.main_h_layout.addWidget(self.user_profile)
+
+        self.user_profile.hide()
 
         include_widgets(power_level=self.session.user.power_level, elements=self.__dict__)
 
+    def authorization(self) -> None:
+        self.authorization_menu.hide()
+        self.user_profile.show()
+        self.user_profile.fill_line_edits()
 
+        include_widgets(self.session.user.power_level, elements=self.__dict__)
 
-
+    def leave(self) -> None:
+        self.authorization_menu.show()
+        self.user_profile.hide()
+        self.session.leave()
+        
+        include_widgets(power_level=self.session.user.power_level, elements=self.__dict__)
+        
     def show_message(self, text: str, error: bool = False, parent=None) -> None:
         message_box = QtWidgets.QMessageBox(parent=self if not parent else parent)
         message_box.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
