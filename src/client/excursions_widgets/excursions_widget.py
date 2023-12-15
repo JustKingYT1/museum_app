@@ -44,6 +44,9 @@ class ExcursionList(QtWidgets.QWidget):
         self.scroll_widget.setLayout(self.scroll_v_layout)
         self.scroll_area.setWidgetResizable(True)
 
+        self.scroll_area.setFrameShape(QtWidgets.QFrame.Shape.Box)
+        self.scroll_area.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
+
         self.scroll_v_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
 
         self.scroll_v_layout.addWidget(self.status_label)

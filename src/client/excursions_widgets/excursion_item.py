@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QWidget
 from src.client.tools import get_pixmap_path
 
 
-class ExcursionItem(QtWidgets.QWidget):
+class ExcursionItem(QtWidgets.QFrame):
     def __init__(self, parent: QWidget) -> None:
         super(ExcursionItem, self).__init__(parent)
         self.parent = parent
@@ -26,6 +26,8 @@ class ExcursionItem(QtWidgets.QWidget):
         self.main_h_layout.addWidget(self.name)
         self.main_h_layout.addWidget(self.city)
         self.main_h_layout.addWidget(self.cost)
+
+        self.setFrameShadow(QtWidgets.QFrame.Shadow.Plain)
 
         self.id.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.city.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
