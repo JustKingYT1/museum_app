@@ -29,7 +29,6 @@ class ExcursionList(QtWidgets.QWidget):
         self.scroll_area = QtWidgets.QScrollArea()
         self.scroll_widget = QtWidgets.QWidget()
         self.scroll_v_layout = QtWidgets.QVBoxLayout()
-
         self.status_label = ExcursionItem(self)
 
     def __setting_ui(self) -> None:
@@ -75,7 +74,7 @@ class ExcursionList(QtWidgets.QWidget):
         for excursion in excursions['result']:
             if self.stop_flag:
                 exit()
-                
+
             self.add_excursion_signal.emit(
                 excursion['id'],
                 get_city_per_id(excursion['city'])['result']['name'],

@@ -94,6 +94,7 @@ class UserProfile(QtWidgets.QWidget):
     def delete_my_account(self) -> None:
         self.parent.session.delete()
         self.parent.leave()
+        self.parent.show_message(text='Succesfully delete account', parent=self)
     
     def on_delete_button_click(self) -> None:
         self.delete_my_account()
