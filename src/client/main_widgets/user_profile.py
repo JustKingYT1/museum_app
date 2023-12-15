@@ -112,6 +112,7 @@ class UserProfile(QtWidgets.QWidget):
         return True
     
     def on_edit_button_clicked(self) -> None:
+        self.parent
         self.switch_on_or_off_line_edits(True)
         self.allow_button.setEnabled(True)
         self.edit_button.setEnabled(False)

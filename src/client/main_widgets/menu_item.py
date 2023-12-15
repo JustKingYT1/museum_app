@@ -26,9 +26,16 @@ class MenuItem(QtWidgets.QFrame):
     def __setting_ui(self) -> None:
         self.setLayout(self.main_h_layout)
 
+        self.shadow_effect = QtWidgets.QGraphicsDropShadowEffect()
+        self.shadow_effect.setBlurRadius(10)
+        self.shadow_effect.setColor(QtGui.QColor(0, 0, 0, 127)) 
+        self.shadow_effect.setOffset(4, 4)
+
+        self.setGraphicsEffect(self.shadow_effect)
+
         self.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Maximum)
 
-        self.title.setStyleSheet('color: black')
+        self.on_mouse_leave()
 
         self.main_h_layout.addWidget(self.container_widget)
         self.container_widget.setLayout(self.container_layout)
@@ -55,12 +62,14 @@ class MenuItem(QtWidgets.QFrame):
         self.connection_def = func
     
     def on_mouse_enter(self) -> None:
-        self.setStyleSheet('QFrame{background-color: darkgray; border-radius: 15px}')
-        self.title.setStyleSheet('color: white')
+        self.setStyleSheet("QFrame {border-radius: 15px; background-color: darkgray; border: 1px solid #999999;}")
+        self.title.setStyleSheet('QLabel {color: white; border: 0px; border-radius: 0px;}')
+        self.icon.setStyleSheet('QLabel {color: white; border: 0px; border-radius: 0px;}')
 
     def on_mouse_leave(self) -> None:
-        self.setStyleSheet('QFrame{background-color: none; border-radius: 15px}')
-        self.title.setStyleSheet('color: black')
+        self.setStyleSheet("QFrame {border-radius: 15px; background-color: none; border: 1px solid #999999;}")
+        self.title.setStyleSheet('QLabel {border: 0px; border-radius: 0px;}')
+        self.icon.setStyleSheet('QLabel {border: 0px; border-radius: 0px;}')
 
     def on_mouse_clicked(self) -> None:
         self.switch_page()

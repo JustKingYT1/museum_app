@@ -21,11 +21,10 @@ class ExcursionItem(QtWidgets.QWidget):
 
     def __setting_ui(self) -> None:
         self.setLayout(self.main_h_layout)
-        self.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
         
-        self.main_h_layout.addWidget(self.id)
-        self.main_h_layout.addWidget(self.city)
+        # self.main_h_layout.addWidget(self.id)
         self.main_h_layout.addWidget(self.name)
+        self.main_h_layout.addWidget(self.city)
         self.main_h_layout.addWidget(self.cost)
 
         self.id.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
@@ -38,9 +37,9 @@ class ExcursionItem(QtWidgets.QWidget):
         self.name.setFrameShape(QtWidgets.QFrame.Shape.Box)
         self.cost.setFrameShape(QtWidgets.QFrame.Shape.Box)
 
+        self.id.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
         self.city.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
         self.name.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
-        self.id.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
         self.cost.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
 
         self.setFixedHeight(70)

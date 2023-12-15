@@ -18,6 +18,7 @@ class ExcursionList(QtWidgets.QWidget):
         self.parent = parent
         self.__init_ui()
         self.__setting_ui()
+        self.update_excursions()
 
     def __init_ui(self) -> None:
         self.last_keypress_time = 0
@@ -47,7 +48,7 @@ class ExcursionList(QtWidgets.QWidget):
 
         self.scroll_v_layout.addWidget(self.status_label)
 
-        self.status_label.set_excursion_info('ID', 'City', 'Name', 'Cost')
+        self.status_label.set_excursion_info(id='ID', city='City', name='Name', cost='Cost')
 
         self.search_button.setIcon(QtGui.QPixmap(get_pixmap_path('search.png')))
         self.search_button.setFixedSize(24, 24)
@@ -85,7 +86,7 @@ class ExcursionList(QtWidgets.QWidget):
     def add_excursion(self, id: int, city: str, name: str, cost: float) -> None:
         new_excursion = ExcursionItem(self)
         self.scroll_widget.__dict__.update({id: new_excursion})
-        new_excursion.set_excursion_info(str(id), str(city), str(name), str(cost))
+        new_excursion.set_excursion_info(id=str(id), city=str(city), name=str(name), cost=str(cost))
         self.scroll_v_layout.addWidget(new_excursion)
 
     def clear_excursions(self) -> None:
@@ -96,5 +97,5 @@ class ExcursionList(QtWidgets.QWidget):
     
     QtCore.Slot(int, str, str, float)
     def add_excursion_slot(self, id, city, name, cost) -> None:
-        self.add_excursion(id, city, name, cost)
+        self.add_excursion(id=id, city=city, name=name, cost=cost)
         include_widgets(self.parent.session.user.power_level, elements=self.__dict__)
