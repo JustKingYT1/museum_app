@@ -33,7 +33,7 @@ routers = (
     
     RouterManager(
         database_model=database_models.Excursions,
-        pydantic_model=pydantic_models.Excursions,
+        pydantic_model=pydantic_models.Excursion,
         prefix='/excursions',
         tags=['Excursions']
     ).fastapi_router,

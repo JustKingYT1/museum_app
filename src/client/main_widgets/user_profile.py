@@ -17,11 +17,11 @@ class UserProfile(QtWidgets.QWidget):
         self.confirm_h_layout = QtWidgets.QHBoxLayout()
         self.buttons_h_layout = QtWidgets.QHBoxLayout()
 
-        self.id_label = QtWidgets.QLabel(text='ID')
-        self.power_level_label = QtWidgets.QLabel(text='Power level')
-        self.login_label = QtWidgets.QLabel(text='Login')
-        self.password_label = QtWidgets.QLabel(text='Password')
-        self.confirm_password_label = QtWidgets.QLabel(text='Confirm password')
+        self.id_label = QtWidgets.QLabel(text='ID:')
+        self.power_level_label = QtWidgets.QLabel(text='Power level:')
+        self.login_label = QtWidgets.QLabel(text='Login:')
+        self.password_label = QtWidgets.QLabel(text='Password:')
+        self.confirm_password_label = QtWidgets.QLabel(text='Confirm:')
 
         self.spacer = QtWidgets.QSpacerItem(0, 10)
 
@@ -34,10 +34,13 @@ class UserProfile(QtWidgets.QWidget):
         self.allow_button = QtWidgets.QPushButton(text='Allow')
         self.edit_button = QtWidgets.QPushButton(text='Edit')
         self.leave_button = QtWidgets.QPushButton(text='Leave')
+        self.delete_button = QtWidgets.QPushButton(text='Delete')
 
     def __setting_ui(self) -> None:
         self.setLayout(self.main_h_layout)
         self.setContentsMargins(0, 0, 0, 0)
+        self.main_h_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
+        self.setMaximumWidth(250)
 
         self.main_h_layout.addLayout(self.id_h_layout)
         self.main_h_layout.addLayout(self.power_level_h_layout)
@@ -60,6 +63,7 @@ class UserProfile(QtWidgets.QWidget):
         self.password_h_layout.addWidget(self.password_line_edit)
         self.confirm_h_layout.addWidget(self.confirm_password_line_edit)
 
+        self.buttons_h_layout.addWidget(self.delete_button)
         self.buttons_h_layout.addWidget(self.leave_button)
         self.buttons_h_layout.addWidget(self.edit_button)
         self.buttons_h_layout.addWidget(self.allow_button)
@@ -80,12 +84,20 @@ class UserProfile(QtWidgets.QWidget):
         self.allow_button.clicked.connect(slot=self.on_allow_button_clicked)
         self.edit_button.clicked.connect(slot=self.on_edit_button_clicked)
         self.leave_button.clicked.connect(slot=self.on_leave_button_clicked)
+        self.delete_button.clicked.connect(slot=self.on_delete_button_click)
 
     def fill_line_edits(self) -> None:
         self.id_line_edit.setText(str(self.parent.session.user.userID))
         self.power_level_line_edit.setText(str(self.parent.session.user.power_level))
         self.login_line_edit.setText(self.parent.session.user.login)
     
+    def delete_my_account(self) -> None:
+        self.parent.session.delete()
+        self.parent.leave()
+    
+    def on_delete_button_click(self) -> None:
+        self.delete_my_account()
+
     def data_is_valid(self) -> bool:
         if self.password_line_edit.text() != self.confirm_password_line_edit.text():
             self.parent.show_message(text="Incorrect confirm password", error=True, parent=self)

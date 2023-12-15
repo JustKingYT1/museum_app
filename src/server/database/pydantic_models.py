@@ -1,7 +1,9 @@
 from pydantic import BaseModel
+from typing import Optional
+
 
 class ModifyBaseModel(BaseModel):
-    id: int
+    id: Optional[int] = 0
 
 class TypesUsers(ModifyBaseModel):
     title: str
@@ -16,9 +18,11 @@ class Cities(ModifyBaseModel):
     name: str
     coordinates: str
 
-class Excursions(ModifyBaseModel):
-    city_id: int
+class ExcursionFind(ModifyBaseModel):
     name: str
+
+class Excursion(ExcursionFind):
+    city: int
     cost: float
 
 class ListUsersOnExcursion(ModifyBaseModel):

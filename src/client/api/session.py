@@ -1,5 +1,5 @@
 from src.server.database.pydantic_models import UserAuth, Users
-from src.client.api.resolvers import login, register, update_password
+from src.client.api.resolvers import login, register, update_password, delete_account
 from src.server.database.pydantic_models import LoginData
 from src.client.api.resolvers import check_connection
 
@@ -68,6 +68,10 @@ class Session:
                     password=answer['result']['password'],
                     power_level=self.user.power_level
                 )
+    
+    def delete(self):
+        delete_account(self.user.userID)
+        self.leave()
 
     def leave(self):
         self.user.userID = -1

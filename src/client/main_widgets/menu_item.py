@@ -80,7 +80,6 @@ class MenuItem(QtWidgets.QFrame):
         for item in self.parent().__dict__:
             page: MenuItem = self.parent().__dict__[item]
             if type(page) == MenuItem:
-                print(1)
                 page.widget.show() if page == self else page.widget.hide()
 
     
