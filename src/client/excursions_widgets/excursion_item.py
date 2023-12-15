@@ -27,8 +27,6 @@ class ExcursionItem(QtWidgets.QFrame):
         self.main_h_layout.addWidget(self.city)
         self.main_h_layout.addWidget(self.cost)
 
-        self.setFrameShadow(QtWidgets.QFrame.Shadow.Plain)
-
         self.id.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.city.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.name.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
