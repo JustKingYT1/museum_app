@@ -11,7 +11,6 @@ def log_in(login: str, password: str) -> dict:
         
 def change_password(login: str, password: str) -> dict:
     user = Users.get_or_none(Users.login == login)
-    print(user)
     if user:
         user.password = password
         user.save()

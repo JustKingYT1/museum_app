@@ -9,6 +9,7 @@ from src.client.main_widgets.page_list import PageList
 from src.client.tools import include_widgets
 from src.client.main_widgets.authorization_menu import AuthorizationMenu
 from src.client.main_widgets.user_profile import UserProfile
+from src.client.excursions_widgets.excursions_widget import ExcursionList
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -41,7 +42,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.page_list = PageList(self)
         self.authorization_menu = AuthorizationMenu(self)
         self.user_profile = UserProfile(self)
-        # TODO
+        self.excursion_list = ExcursionList(self)
 
     def __setting_ui(self) -> None: 
         self.resize(930, 615)
@@ -56,6 +57,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.main_h_layout.addWidget(self.widget_container)
         self.main_h_layout.addWidget(self.authorization_menu)
         self.main_h_layout.addWidget(self.user_profile)
+
+        self.widget_container_v_layout.addWidget(self.excursion_list)
+        self.page_list.excursion_item.bind_widget(self.excursion_list)
 
         self.user_profile.hide()
 

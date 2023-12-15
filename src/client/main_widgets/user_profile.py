@@ -38,6 +38,8 @@ class UserProfile(QtWidgets.QWidget):
     def __setting_ui(self) -> None:
         self.setLayout(self.main_h_layout)
         self.setContentsMargins(0, 0, 0, 0)
+        self.main_h_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
+        self.setMaximumWidth(250)
 
         self.main_h_layout.addLayout(self.id_h_layout)
         self.main_h_layout.addLayout(self.power_level_h_layout)

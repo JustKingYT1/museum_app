@@ -1,4 +1,8 @@
 import requests
+import sys
+
+sys.path.append('C:/museum_app')
+
 import settings
 from src.server.database.pydantic_models import LoginData, Users
 
@@ -27,3 +31,13 @@ def register(data: Users) -> dict:
 @server_available
 def update_password(data: Users) -> dict:
     return requests.put(url=f'{settings.URL}/users/change', data=f'{{"login": "{data.login}", "password": "{data.password}"}}').json()
+
+@server_available
+def get_all_excursions() -> dict:
+    return requests.get(url=f'{settings.URL}/excursions/get_all').json()
+
+def search_excursions(name: str) -> dict:
+    return requests.get(url=f'{settings.URL}/excursions/search', data=f'{{"name": "{name}"}}').json()
+
+def get_city_per_id(id: int) -> None:
+    return requests.get(url=f'{settings.URL}/cities/get/{id}').json()

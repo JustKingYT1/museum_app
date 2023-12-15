@@ -17,7 +17,7 @@ def index() -> fastapi.responses.RedirectResponse:
 
 
 def start_server():
-    uvicorn.run(app='server:app', reload=True, host=settings.HOST, port=settings.PORT)
+    uvicorn.run(app='server:app', host=settings.HOST, port=settings.PORT)
 
 
 if settings.DEBUG:

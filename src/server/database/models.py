@@ -29,6 +29,7 @@ class Excursions(BaseModel):
     city: peewee.ForeignKeyField = peewee.ForeignKeyField(model=Cities, related_name='fk2_cities_of_excursions', on_delete="CASCADE", default=0)
     name: peewee.CharField = peewee.CharField(max_length=50, default='')
     cost: peewee.FloatField = peewee.FloatField(default=0)
+    # date: peewee.DateField = peewee.DateField(default='2004-01-07')
 
 class ListUsersOnExcursion(BaseModel):
     user: peewee.ForeignKeyField = peewee.ForeignKeyField(model=Users, related_name='fk3_users_of_list_users_on_excursion', on_delete="CASCADE", default=0)

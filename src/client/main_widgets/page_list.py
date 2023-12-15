@@ -13,7 +13,7 @@ class PageList(QtWidgets.QWidget):
 
     def __init_ui(self) -> None:
         self.main_h_layout = QtWidgets.QHBoxLayout()
-        self.expedition_item = MenuItem(self, -1)
+        self.excursion_item = MenuItem(self, -1)
 
     def __setting_ui(self) -> None:
         self.setLayout(self.main_h_layout)
@@ -22,8 +22,8 @@ class PageList(QtWidgets.QWidget):
         self.main_h_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         self.main_h_layout.setContentsMargins(5, 5, 5, 5)
 
-        self.opened_widget = self.expedition_item
+        self.opened_widget = self.excursion_item
 
-        self.expedition_item.setup(icon_name='expeditions', title='Expeditions')
+        self.excursion_item.setup(icon_name='excursions', title='Excursions')
 
-        self.main_h_layout.addWidget(self.expedition_item)
+        self.main_h_layout.addWidget(self.excursion_item)
