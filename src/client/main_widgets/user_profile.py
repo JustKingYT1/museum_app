@@ -92,6 +92,8 @@ class UserProfile(QtWidgets.QWidget):
         self.login_line_edit.setText(self.parent.session.user.login)
     
     def delete_my_account(self) -> None:
+        if QtWidgets.QMessageBox.question(self, 'Info', 'Are you sure?') != QtWidgets.QMessageBox.StandardButton.Yes:
+            return
         self.parent.session.delete()
         self.parent.leave()
         self.parent.show_message(text='Succesfully delete account', parent=self)
