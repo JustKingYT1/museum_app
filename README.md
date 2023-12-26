@@ -1,1 +1,1 @@
-# museum_app
+# дурацкий museum_app
